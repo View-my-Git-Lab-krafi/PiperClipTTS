@@ -13,6 +13,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 ## Requirements
 
 - Python 3.x
+  - recommend python 3.10 (there may Issues on other python version)
 - Dependencies:
   - `pyperclip`: Clipboard monitoring.
   - `tkinter`: GUI library.
