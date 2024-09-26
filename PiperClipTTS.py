@@ -8,7 +8,6 @@ from tkinter import ttk
 import argostranslate.package
 import argostranslate.translate
 import re
-
 class ClipboardMonitor:
     def __init__(self):
         self.models = {
@@ -17,7 +16,9 @@ class ClipboardMonitor:
             "ru_RU-irina": "./onnx/ru_RU-irina-medium.onnx",
             "ru_RU-ruslan": "./onnx/ru_RU-ruslan-medium.onnx"
         }
-
+        print("If you want more language model. Visit:-")
+        print("https://rhasspy.github.io/piper-samples/")
+        print("https://github.com/rhasspy/piper/blob/master/VOICES.md")
         self.model_path = self.models["ru_RU-denis"]
         self.speed = 1.0
         self.last_copied = pyperclip.paste()
