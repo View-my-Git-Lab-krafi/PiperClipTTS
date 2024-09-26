@@ -37,15 +37,18 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
    ```bash
    pip install pyperclip argostranslate
    ```
-
-3. **Install `sox`**:
+3. **Install Python dependencies using requirements.txt:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. **Install `sox`**:
    - **Linux/macOS**: 
      ```bash
      sudo apt-get install sox
      ```
    - **Windows**: Download and install from [SoX download page](http://sox.sourceforge.net/).
 
-4. **Download Piper TTS models** and place them in the `./onnx/` directory. For example:
+6. **Download Piper TTS models** and place them in the `./onnx/` directory. For example:
    - `ru_RU-denis-medium.onnx`
    - `en_US-bryce-medium.onnx`
 
