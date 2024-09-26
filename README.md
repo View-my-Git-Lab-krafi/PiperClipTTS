@@ -11,7 +11,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 - **Audio Playback**: Automatically plays the generated audio after processing.
 - **Translation**: Automatically translates clipboard text into another language and converts it to speech. Supports many languages via Argos Translate.
 - **Sentence Mode**: Option to play text sentence-by-sentence, translating and speaking each sentence individually.
-- **Cross-platform**: Designed to work on Linux, macOS (using `aplay`), and Windows.
+- **Cross-platform**: Designed to work on Linux, macOS (using `aplay`).
 
 ## Requirements
 
@@ -45,7 +45,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
    - **Linux/macOS**: 
      ```bash
      sudo apt-get install sox
-     ```
+     ``` # currently not supported for Windows
    - **Windows**: Download and install from [SoX download page](http://sox.sourceforge.net/).
 
 
