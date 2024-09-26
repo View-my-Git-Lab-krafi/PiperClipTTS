@@ -23,7 +23,8 @@ class ClipboardMonitor:
         self.speed = 1.0
         self.last_copied = pyperclip.paste()
         self.audio_process = None
-        
+        self.active_threads = []
+        self.monitoring = False 
 
         self.languages = {
             "Russian": "ru",
@@ -180,7 +181,6 @@ class ClipboardMonitor:
             instruction_label
         ]
 
-        # Initially toggle based on the default state of the checkbox
         self.toggle_translation_options()
 
         self.root.mainloop()
@@ -223,6 +223,7 @@ class ClipboardMonitor:
         return translated_text
 
     def start_monitoring(self):
+        self.stop_all_tasks()
         self.model_path = self.models[self.model_var.get()]
         self.translated_model_path = self.models[self.translated_model_var.get()]
         self.speed = self.speed_var.get()
@@ -232,9 +233,26 @@ class ClipboardMonitor:
         self.translate_enabled = self.translate_var.get()
         self.sentence_mode = self.sentence_mode_var.get()
 
-        self.translate_tts_enabled = self.translate_tts_var.get()  # Get the new checkbox value
+        self.translate_tts_enabled = self.translate_tts_var.get()  
 
         threading.Thread(target=self.monitor_clipboard, daemon=True).start()
+        self.monitoring = True
+        monitor_thread = threading.Thread(target=self.monitor_clipboard, daemon=True)
+        self.active_threads.append(monitor_thread) 
+        monitor_thread.start() 
+    def stop_all_tasks(self):
+        """Stops all running threads and audio."""
+
+        self.monitoring = False
+
+        self.stop_audio()
+
+        for thread in self.active_threads:
+            if thread.is_alive():
+                print("Stopping a running task...")
+                thread.join(timeout=1)
+
+        self.active_threads = []  
 
 
     def split_sentences(self, text):
@@ -250,7 +268,6 @@ class ClipboardMonitor:
         with open(temp_text_file, "w", encoding="utf-8") as f:
             f.write(text)
 
-        # Use the selected TTS model for the translated text
         if translated:
             model_path = self.translated_model_path
         else:
@@ -302,7 +319,7 @@ class ClipboardMonitor:
             try:
                 print(f"Playing audio: {audio_file}")
                 self.audio_process = subprocess.Popen(["start", audio_file], shell=True)
-                self.audio_process.wait()  # Wait for the process to finish
+                self.audio_process.wait() 
             except Exception as e:
                 print(f"Error playing audio: {e}")
 
@@ -310,39 +327,45 @@ class ClipboardMonitor:
             print("Translation audio completed.")
 
     def monitor_clipboard(self):
-        while True:
+        """Monitor clipboard for new copied text."""
+        while self.monitoring:
             current_copied = pyperclip.paste()
             if current_copied != self.last_copied:
-                print("Something new has been copied to the clipboard!")
+                print("New clipboard content detected!")
                 print(f"Copied text: {current_copied}")
                 self.last_copied = current_copied
+
                 self.stop_audio()
+
                 if self.sentence_mode:
                     sentences = self.split_sentences(current_copied)
                     for sentence in sentences:
-                        # Read original text
-                        tts_thread = threading.Thread(target=self.text_to_speech, args=(sentence,))
-                        tts_thread.start()
-                        tts_thread.join()
-                        # Check if translation is enabled and "Translate and Read" is checked
-                        if self.translate_enabled and self.translate_tts_enabled:
-                            translated_text = self.translate_text(sentence)
-                            translated_tts_thread = threading.Thread(target=self.text_to_speech, args=(translated_text, True))
-                            translated_tts_thread.start()
-                            translated_tts_thread.join()
+                        if not self.monitoring:
+                            break  # Stop processing if monitoring is stopped
+                        self.play_tts(sentence)
                 else:
-                    # Read original text
-                    tts_thread = threading.Thread(target=self.text_to_speech, args=(current_copied,))
-                    tts_thread.start()
-                    tts_thread.join()
-                    # Check if translation is enabled and "Translate and Read" is checked
-                    if self.translate_enabled and self.translate_tts_enabled:
-                        translated_text = self.translate_text(current_copied)
-                        translated_tts_thread = threading.Thread(target=self.text_to_speech, args=(translated_text, True))
-                        translated_tts_thread.start()
-                        translated_tts_thread.join()
+                    if self.monitoring:
+                        self.play_tts(current_copied)
+
             time.sleep(0.5)
 
+    def play_tts(self, text):
+        """Handles TTS playback for both original and translated text."""
+        if not self.monitoring:
+            print("Monitoring has been stopped, skipping TTS.")
+            return
+
+        tts_thread = threading.Thread(target=self.text_to_speech, args=(text,))
+        tts_thread.start()
+        self.active_threads.append(tts_thread)
+        tts_thread.join()
+        # Check if translation is enabled and "Translate and Read" is checked
+        if self.translate_enabled and self.translate_tts_enabled:
+            translated_text = self.translate_text(text)
+            translated_tts_thread = threading.Thread(target=self.text_to_speech, args=(translated_text, True))
+            translated_tts_thread.start()
+            self.active_threads.append(translated_tts_thread)
+            translated_tts_thread.join()
 
 if __name__ == "__main__":
     monitor = ClipboardMonitor()
