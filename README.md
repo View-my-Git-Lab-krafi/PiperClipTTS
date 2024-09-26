@@ -48,9 +48,6 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
      ```
    - **Windows**: Download and install from [SoX download page](http://sox.sourceforge.net/).
 
-6. **Download Piper TTS models** and place them in the `./onnx/` directory. For example:
-   - `ru_RU-denis-medium.onnx`
-   - `en_US-bryce-medium.onnx`
 
 ## Usage
 
@@ -61,10 +58,15 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 
 2. The GUI will open, allowing you to select a voice model, translation languages, and adjust the speech speed.
 
-3. Once you start monitoring, the program will detect any new text copied to the clipboard, translate it (if selected), and convert it to speech using the chosen TTS model.
+3. Once you start monitoring, the program will detect any new text copied to the clipboard, First speech that text then translate it (if selected), and convert it to speech according to your language.
 
 ## Configuration
-
+ **Download Piper TTS models** and place them in the `./onnx/` directory. For example: (Optional)
+   - `ru_RU-denis-medium.onnx`
+   - `en_US-bryce-medium.onnx`
+   You can find on 
+   [https://github.com/rhasspy/piper/blob/master/VOICES.md](https://github.com/rhasspy/piper/blob/master/VOICES.md)
+   [https://rhasspy.github.io/piper-samples/](https://rhasspy.github.io/piper-samples/)
 - **Models**: Modify or add new models by updating the `models` dictionary in the script:
   ```python
   self.models = {
@@ -96,6 +98,3 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 ## License
 
 This project is open-source under the GPL-3 License. Feel free to contribute and modify!
-
-
-This updated `README.md` reflects the newly added features such as translation and sentence-by-sentence mode while maintaining the structure of the original document.
