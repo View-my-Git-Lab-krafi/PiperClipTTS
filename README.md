@@ -31,7 +31,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 
 2. **Install Python dependencies**:
    ```bash
-   pip install pyperclip
+   pip install pyperclip argostranslate
    ```
 
 3. **Install `sox`**:
@@ -83,8 +83,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 
 ## License
 
-This project is open-source under the MIT License. Feel free to contribute and modify!
+This project is open-source under the GPL-3 License. Feel free to contribute and modify!
 
 ---
 
-Feel free to modify this README according to your project structure or additional features!
