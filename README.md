@@ -44,7 +44,7 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 5. **Install `sox`**:
    - **Linux/macOS**: 
      ```bash
-     sudo apt-get install sox
+     sudo apt install python3.10-tk sox
      ``` # currently not supported for Windows
    - **Windows**: Download and install from [SoX download page](http://sox.sourceforge.net/).
 
