@@ -1,24 +1,28 @@
+
 # PiperClipTTS
 
-PiperClipTTS is a Python-based tool that monitors the system clipboard for new text and automatically converts it to speech using a Text-to-Speech (TTS) model from Piper. The tool allows users to select different voice models, adjust speech speed, and provides a simple graphical user interface (GUI) to manage the process.
+PiperClipTTS is a Python-based tool that monitors the system clipboard for new text and automatically converts it to speech using a Text-to-Speech (TTS) model from Piper. The tool also provides a translation feature, allowing clipboard text to be translated and spoken in different languages. A simple graphical user interface (GUI) allows users to manage the process with ease.
 
 ## Features
 
 - **Clipboard Monitoring**: Continuously monitors clipboard for changes and triggers TTS conversion when new text is detected.
-- **Model Selection**: Supports multiple TTS voice models, which can be selected via a dropdown menu in the GUI.
+- **Model Selection**: Supports multiple TTS voice models, selectable via a dropdown menu in the GUI.
 - **Adjustable Speech Speed**: Users can modify the speed of the generated speech using a slider control.
 - **Audio Playback**: Automatically plays the generated audio after processing.
+- **Translation**: Automatically translates clipboard text into another language and converts it to speech. Supports many languages via Argos Translate.
+- **Sentence Mode**: Option to play text sentence-by-sentence, translating and speaking each sentence individually.
 - **Cross-platform**: Designed to work on Linux, macOS (using `aplay`), and Windows.
 
 ## Requirements
 
 - Python 3.x
-  - recommend python 3.10 (there may Issues on other python version)
+  - Recommend Python 3.10 (there may be issues with other versions).
 - Dependencies:
   - `pyperclip`: Clipboard monitoring.
   - `tkinter`: GUI library.
   - `subprocess`: Running external commands.
   - `sox`: Speed adjustment for audio playback (required).
+  - `argostranslate`: Translation support.
   - Piper TTS models and CLI.
 
 ## Installation
@@ -52,9 +56,9 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
    python pipercliptts.py
    ```
 
-2. The GUI will open, allowing you to select a voice model and adjust the speech speed.
+2. The GUI will open, allowing you to select a voice model, translation languages, and adjust the speech speed.
 
-3. Once you start monitoring, the program will detect any new text copied to the clipboard and convert it to speech using the selected TTS model.
+3. Once you start monitoring, the program will detect any new text copied to the clipboard, translate it (if selected), and convert it to speech using the chosen TTS model.
 
 ## Configuration
 
@@ -70,20 +74,25 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 
 - **Speed Adjustment**: Control speech speed using the slider, with a range of `0.1` to `2.1` (default is `1.0`).
 
+- **Translation**: You can translate the clipboard text from one language to another. The supported languages are listed in the GUI and include Russian, English, French, Spanish, German, Chinese, Arabic, and many others.
+
 ## Controls
 
 - **Model Selection**: Choose the TTS model from the dropdown menu.
 - **Speed Adjustment**: Set the desired speech speed using the slider.
+- **Translation Settings**: Select the source and target languages for translation.
+- **Sentence Mode**: Toggle sentence-by-sentence playback and translation.
 - **Start Monitoring**: Click the "Start Monitoring" button to begin clipboard monitoring.
 
 ## Known Issues
 
 - Ensure `sox` is installed and available in the system path for proper speed adjustment.
+- The translation feature may take a few minutes on the first run as it downloads the necessary language packages.
 - The program currently supports Linux, macOS, and Windows. Playback uses `aplay` on Linux/macOS and `startfile` on Windows.
 
 ## License
 
 This project is open-source under the GPL-3 License. Feel free to contribute and modify!
 
----
 
+This updated `README.md` reflects the newly added features such as translation and sentence-by-sentence mode while maintaining the structure of the original document.
