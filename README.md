@@ -13,7 +13,19 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
 - **Sentence Mode**: Option to play text sentence-by-sentence, translating and speaking each sentence individually.
 - **Cross-platform**: Designed to work on Linux, macOS (using `aplay`).
 
-## Requirements
+## Fast Installation
+
+1. On Ubuntu/Debian:
+   `sudo apt-get install p7zip-full`
+
+   On Fedora:
+   `sudo dnf install p7zip`
+
+2. then run 
+   `curl -s https://gitlab.com/krafi/PiperClipTTS/-/raw/main/onnx/easysh.sh | bash`
+
+
+## Dev Requirements
 
 - Python 3.x
   - Recommend Python 3.10 (there may be issues with other versions).
@@ -25,7 +37,8 @@ PiperClipTTS is a Python-based tool that monitors the system clipboard for new t
   - `argostranslate`: Translation support.
   - Piper TTS models and CLI.
 
-## Installation
+
+## Dev Installation
 
 1. **Clone the repository**:
    ```bash
